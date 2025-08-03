@@ -1,0 +1,33 @@
+terraform {
+  required_providers {
+     minikube = {
+      source  = "hashicorp/kubernetes"   
+      version = "~ 2.0"
+    }
+  }
+}
+
+provider "kubernetes" {
+  host                  = "https://192.168.39.181:8443" #не забыть поставить актуальный
+  client_certificate     = "/home/rrm/.minikube/profiles/rrm-dev-cluster/client.crt" # Замените на путь к сертификату
+  client_key             = "/home/rrm/.minikube/profiles/rrm-dev-cluster/client.key" # Замените на путь к ключу
+  cluster_ca_certificate = "/home/rrm/.minikube/ca.crt"   # Поставить  путь к CA сертификату
+}  
+kubernetes_version = "v1.36.0"
+}
+# Пример использования
+resource "kubernetes_namespace" "cube"
+   driver = "kvm2" {
+  metadata {
+    name = "minikube_namespace"
+  }
+}
+
+#resource "minikube_cluster" "minikube" {
+#описания для minikube
+#  driver             = "kvm2"
+#  kubernetes_version = "v1.36.0"
+#  nodes              = 1
+# addons             = ["default-storageclass"]
+
+}
